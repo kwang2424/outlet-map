@@ -15,14 +15,9 @@ function Root() {
   const [viewState, setViewState] = React.useState({
     longitude: -74.003207,
     latitude: 40.719632,
-    zoom: 12
+    zoom: 14
   });
 
-
-  // -74.049919,40.573975,-73.563774,40.873196
-  // const sw = [-74.049919,40.573975]
-  // const ne = [-73.563774,40.873196]
-  // const llb = new mapboxgl.LngLatBounds(sw, ne);
   return (
     <Map
       {...viewState}
