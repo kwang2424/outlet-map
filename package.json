@@ -4,6 +4,7 @@
     "build": "webpack --mode=production -o ./dist"
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-geocoder": "^5.0.1",
     "@turf/turf": "^6.5.0",
     "mapbox-gl": "^2.0.0",
     "react": "^18.0.0",

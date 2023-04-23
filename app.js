@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {createRoot} from 'react-dom/client';
 import Map, {Marker} from 'react-map-gl';
-
+import MapboxGeocoder, {GeocoderOptions} from '@mapbox/mapbox-gl-geocoder'
 // import * as turf from '@turf/turf';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -18,7 +18,8 @@ function Root() {
         zoom: 14
     });
     const [adding, setAdding] = React.useState(false)
-
+    const [markers, setMarkers] = React.useState([])
+    // const [tempMarker, setTempMarker] = React.useState(null)
     // onClick = (viewState, item) => {
     //     console.log('here')
     //     this.setState({
@@ -43,7 +44,7 @@ function Root() {
                 maxBounds={[-74.09919,40.573975,-73.563774,40.873196]}
                 // onClick = {evt => setAdding(!adding)}
             >
-                <Marker longitude={-74.0122106} latitude={40.7467898} color="red" />
+                {/* <Marker longitude={-74.0122106} latitude={40.7467898} color="red" /> */}
             </Map>
             </>
         );
