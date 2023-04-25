@@ -3,9 +3,12 @@ import * as React from 'react';
 import {createRoot} from 'react-dom/client';
 import Map, {Marker} from 'react-map-gl';
 import MapboxGeocoder, {GeocoderOptions} from '@mapbox/mapbox-gl-geocoder'
+import GeocoderControl from './geocoder-control';
+import { GeolocateControl, NavigationControl } from 'react-map-gl';
 // import * as turf from '@turf/turf';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
+import ControlPanel from './control-panel';
 
 // const GEOFENCE = turf.circle([-74.0122106, 40.7467898], 5, {units: 'miles'});
 
@@ -42,17 +45,22 @@ function Root() {
                 mapStyle="mapbox://styles/mapbox/streets-v9"
                 mapboxAccessToken={MAPBOX_TOKEN}
                 maxBounds={[-74.09919,40.573975,-73.563774,40.873196]}
+                
                 // onClick = {evt => setAdding(!adding)}
             >
                 {/* <Marker longitude={-74.0122106} latitude={40.7467898} color="red" /> */}
+                {/* <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-left" />
+                <GeolocateControl */}
+                
             </Map>
+            <ControlPanel />
             </>
         );
     }
     else {
         return (
         <>
-        <button onClick={() => setAdding(!adding)}>add marker</button>
+        <button onClick={() => setAdding(!adding)}>not add marker</button>
         <Map
             {...viewState}
             onMove={evt => setViewState(evt.viewState)}
@@ -63,7 +71,10 @@ function Root() {
             // onClick = {evt => setAdding(!adding)}
         >
             {/* <Marker longitude={-74.0122106} latitude={40.7467898} color="red" /> */}
+            {/* <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-left" /> */}
+            
         </Map>
+        {/* <ControlPanel /> */}
         </>
         );
     }
