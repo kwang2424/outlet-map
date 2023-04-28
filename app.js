@@ -51,9 +51,13 @@ function Root() {
                 {/* <Marker longitude={-74.0122106} latitude={40.7467898} color="red" /> */}
                 {/* <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-left" />
                 <GeolocateControl */}
-                
+                <NavigationControl position="bottom-right" />
+                <GeolocateControl 
+                position="top-left"
+                trackUserLocation
+                onGeolocate={(e) => console.log(e.coords)} />
             </Map>
-            <ControlPanel />
+            
             </>
         );
     }
@@ -71,10 +75,14 @@ function Root() {
             // onClick = {evt => setAdding(!adding)}
         >
             {/* <Marker longitude={-74.0122106} latitude={40.7467898} color="red" /> */}
-            {/* <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-left" /> */}
-            
+            <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-left" />
+            {/* <NavigationControl position="bottom-right" />
+            <GeolocateControl position="top-left" /> */}
+            {/* <MapboxGeocoder mapboxAccessToken={MAPBOX_TOKEN}/> */}
+            {/*  */}
         </Map>
         {/* <ControlPanel /> */}
+        
         </>
         );
     }
