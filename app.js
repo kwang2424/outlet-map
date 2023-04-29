@@ -5,6 +5,7 @@ import Map, {Marker} from 'react-map-gl';
 import MapboxGeocoder, {GeocoderOptions} from '@mapbox/mapbox-gl-geocoder'
 import GeocoderControl from './geocoder-control';
 import { GeolocateControl, NavigationControl } from 'react-map-gl';
+import { Popup } from 'react-map-gl';
 // import * as turf from '@turf/turf';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -21,19 +22,67 @@ function Root() {
         zoom: 14
     });
     const [adding, setAdding] = React.useState(false)
+    const [popup, setPopup] = React.useState(null)
     const [markers, setMarkers] = React.useState([])
-    // const [tempMarker, setTempMarker] = React.useState(null)
-    // onClick = (viewState, item) => {
-    //     console.log('here')
-    //     this.setState({
-    //     viewport,
-    //     tempMarker: {
-    //         name: item.place_name,
-    //         longitude: item.center[0],
-    //         latitude: item.center[1]
-    //     }
-    //     })
+    // const [markerLoc, setMarkerLoc] = React.useState(null)
+    React.useEffect(() => {
+        setMarkers([[-74.003207, 40.719632], [-74.003107, 40.719635]])
+        console.log(markers)
+    }, [adding])
+    // if (!markers) {
+    //     return (
+    //         <div>loading...</div>
+    //     )
     // }
+    const handleOnResult = (evt) => {
+        const { result } = evt;
+        const location =
+          result &&
+          (result.center || (result.geometry?.type === 'Point' && result.geometry.coordinates));
+        // console.log(location)
+        if (location) {
+            console.log('getting set')
+          setPopup({
+            longitude: location[0],
+            latitude: location[1],
+          });
+        //   setMarkerLoc({
+        //     longitude: location[0],
+        //     latitude: location[1],
+        //   })
+        } else {
+          setPopup(null);
+        }
+      };
+
+    const handleSubmit = async (evt) => {
+        evt.preventDefault();
+        console.log('submitting')
+        setAdding(false)
+        const body = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(popup)
+        }
+        const res = await fetch('/api/locations', body)
+        console.log(body)
+        console.log(res)
+    }
+
+    const mapContent = (
+        <>
+          <NavigationControl position="bottom-right" />
+          <GeolocateControl
+            position="top-left"
+            trackUserLocation
+            onGeolocate={(e) => console.log(e.coords)}
+          />
+          {adding && <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-left" onResult={handleOnResult}/>}
+        </>
+      );
+
     if (adding) {
         return (
             <>
@@ -45,17 +94,25 @@ function Root() {
                 mapStyle="mapbox://styles/mapbox/streets-v9"
                 mapboxAccessToken={MAPBOX_TOKEN}
                 maxBounds={[-74.09919,40.573975,-73.563774,40.873196]}
-                
-                // onClick = {evt => setAdding(!adding)}
             >
-                {/* <Marker longitude={-74.0122106} latitude={40.7467898} color="red" /> */}
-                {/* <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-left" />
-                <GeolocateControl */}
-                <NavigationControl position="bottom-right" />
-                <GeolocateControl 
-                position="top-left"
-                trackUserLocation
-                onGeolocate={(e) => console.log(e.coords)} />
+                {mapContent}
+                {popup && (
+              <Popup
+                longitude={popup.longitude}
+                latitude={popup.latitude}
+                closeButton={true}
+                closeOnClick={false}
+                onClose={() => setPopup(null)}
+                anchor="top"
+              >
+                <div>
+                    {/* {console.log('at')} */}
+                  <label htmlFor="name">Name: </label>
+                  <input type="text" id="name" />
+                  <button onClick={handleSubmit}>Submit</button>
+                </div>
+              </Popup>
+            )}
             </Map>
             
             </>
@@ -72,16 +129,13 @@ function Root() {
             mapStyle="mapbox://styles/mapbox/streets-v9"
             mapboxAccessToken={MAPBOX_TOKEN}
             maxBounds={[-74.09919,40.573975,-73.563774,40.873196]}
-            // onClick = {evt => setAdding(!adding)}
+
         >
-            {/* <Marker longitude={-74.0122106} latitude={40.7467898} color="red" /> */}
-            <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-left" />
-            {/* <NavigationControl position="bottom-right" />
-            <GeolocateControl position="top-left" /> */}
-            {/* <MapboxGeocoder mapboxAccessToken={MAPBOX_TOKEN}/> */}
-            {/*  */}
+            {mapContent}
+            {markers.map(element => {
+                <Marker longitude={element[0]} latitude={element[1]} />
+            })}
         </Map>
-        {/* <ControlPanel /> */}
         
         </>
         );
