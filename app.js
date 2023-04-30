@@ -6,13 +6,8 @@ import MapboxGeocoder, {GeocoderOptions} from '@mapbox/mapbox-gl-geocoder'
 import GeocoderControl from './geocoder-control';
 import { GeolocateControl, NavigationControl } from 'react-map-gl';
 import { Popup } from 'react-map-gl';
-// import * as turf from '@turf/turf';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
-import ControlPanel from './control-panel';
-
-// const GEOFENCE = turf.circle([-74.0122106, 40.7467898], 5, {units: 'miles'});
-
 const MAPBOX_TOKEN = 'pk.eyJ1Ijoia3dhbmcyMDAyIiwiYSI6ImNsZ2d5dXRnYjBnY3IzZW1vMmZhZmlmNHgifQ.X2yO9r0KRGfgdkly34ophw'; // Set your mapbox token here
 
 function Root() {
@@ -24,32 +19,21 @@ function Root() {
     const [adding, setAdding] = React.useState(false)
     const [popup, setPopup] = React.useState(null)
     const [markers, setMarkers] = React.useState([])
-    // const [markerLoc, setMarkerLoc] = React.useState(null)
     React.useEffect(() => {
-        setMarkers([[-74.003207, 40.719632], [-74.003107, 40.719635]])
+        setMarkers([[-74.013207, 40.719632], [-74.023107, 40.719635]])
         console.log(markers)
-    }, [adding])
-    // if (!markers) {
-    //     return (
-    //         <div>loading...</div>
-    //     )
-    // }
+    }, [])
     const handleOnResult = (evt) => {
         const { result } = evt;
         const location =
           result &&
           (result.center || (result.geometry?.type === 'Point' && result.geometry.coordinates));
-        // console.log(location)
         if (location) {
             console.log('getting set')
           setPopup({
             longitude: location[0],
             latitude: location[1],
           });
-        //   setMarkerLoc({
-        //     longitude: location[0],
-        //     latitude: location[1],
-        //   })
         } else {
           setPopup(null);
         }
@@ -79,7 +63,7 @@ function Root() {
             trackUserLocation
             onGeolocate={(e) => console.log(e.coords)}
           />
-          {adding && <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-left" onResult={handleOnResult}/>}
+          {adding && <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-left" onResult={handleOnResult} style={{ backgroundColor: 'white' }}/>}
         </>
       );
 
@@ -133,7 +117,7 @@ function Root() {
         >
             {mapContent}
             {markers.map(element => {
-                <Marker longitude={element[0]} latitude={element[1]} />
+                return <Marker key={element[0] + '' + element[1]} longitude={element[0]} latitude={element[1]} />
             })}
         </Map>
         
