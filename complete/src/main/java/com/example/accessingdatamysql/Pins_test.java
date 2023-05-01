@@ -8,14 +8,14 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 
 @Entity // This tells Hibernate to make a table out of this class
-@Table(name = "Pins_test")
+//@Table(name = "Pins_test")
 public class Pins_test {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer pin_id;
 
-	@Column(name = "outletNum")
-	private String outletNum;
+	private double latitude;
+	private double longitude;
 
 	public Integer getPin_id() {
 		return pin_id;
@@ -25,12 +25,21 @@ public class Pins_test {
 		this.pin_id = Pin_id;
 	}
 
-	public String getOutletNum() {
-		return outletNum;
+	public double getLatitude() {
+		return latitude;
 	}
 
-	public void setOutletNum(String OutletNum) {
-		this.outletNum = OutletNum;
+	public void setLatitude(double lat) {
+		this.latitude = lat;
 	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longi) {
+		this.longitude = longi;
+	}
+
 
 }
