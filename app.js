@@ -6,6 +6,7 @@ import MapboxGeocoder, {GeocoderOptions} from '@mapbox/mapbox-gl-geocoder'
 import GeocoderControl from './geocoder-control';
 import { GeolocateControl, NavigationControl } from 'react-map-gl';
 import { Popup } from 'react-map-gl';
+import '/app.css'
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 const MAPBOX_TOKEN = 'pk.eyJ1Ijoia3dhbmcyMDAyIiwiYSI6ImNsZ2d5dXRnYjBnY3IzZW1vMmZhZmlmNHgifQ.X2yO9r0KRGfgdkly34ophw'; // Set your mapbox token here
@@ -84,7 +85,15 @@ function Root() {
     if (adding) {
         return (
             <>
-            <button onClick={() => setAdding(!adding)}>add marker</button>
+             <nav className = "navbar">
+                {/* no nav bar when adding markers*/}
+            </nav>
+
+            <div className="motto-container">
+                <p> Select a location and add a marker on click </p>
+            </div>
+
+        <div className="map-container">
             <Map
                 {...viewState}
                 onMove={evt => setViewState(evt.viewState)}
@@ -112,14 +121,42 @@ function Root() {
               </Popup>
             )}
             </Map>
-            
+            <button className="add-marker-btn" onClick={() => setAdding(!adding)}>Add Location</button>
+            </div>
             </>
         );
     }
     else {
         return (
         <>
-        <button onClick={() => setAdding(!adding)}>not add marker</button>
+        <nav className = "navbar">
+                <div className = "container">
+                    <span className = "navbar-logo">
+                         <img src = "https://cdn1.iconfinder.com/data/icons/real-estate-set-4/512/18-1024.png"/>
+                    </span>
+
+                    <span className = "navbar-logo">
+                         <img src = "https://cdn1.iconfinder.com/data/icons/real-estate-set-4/512/18-1024.png"/>
+                    </span>
+                </div>
+            </nav>
+
+            <div className="motto-container">
+                <h1>Plugged</h1>
+                <p> For all your pluggin needs</p>
+            </div>
+        
+        <div className="description">
+        <p>Welcome to Plugged! Our website is the go-to destination for locating all your plugging needs. If you need help locating any electrical outlets,
+             we've got you covered. Our wide cast of crowd-sourced data in NY is designed to meet your needs and exceed your expectations. If you want to 
+             add a publicly accessible outlet, press the "Add Location" button. Happy Plugging!</p>
+        <img className = "forky" src="https://thumbs.dreamstime.com/z/child-put-fork-electric-socket-dangerous-situation-home-little-boy-playing-electrical-outlet-child-put-fork-electric-191333000.jpg" alt="fork" />
+        </div>
+
+        <hr />
+
+        <div className="map-container">
+        <button className="add-marker-btn" onClick={() => setAdding(!adding)}>Add Location</button>
         <Map
             {...viewState}
             onMove={evt => setViewState(evt.viewState)}
@@ -134,7 +171,7 @@ function Root() {
                 return <Marker key={element[0] + '' + element[1]} longitude={element[0]} latitude={element[1]} />
             })}
         </Map>
-        
+        </div>
         </>
         );
     }
