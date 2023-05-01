@@ -1,5 +1,10 @@
 package com.example.accessingdatamysql;
 
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,10 +44,33 @@ public class MainController {
 		return "Saved";
 	}
 
-	@GetMapping(path="/all")
-	public @ResponseBody Iterable<Pins_test> getAllPins() {
+	@GetMapping(path="/show")
+	public @ResponseBody ArrayList<double[]> getAllPins() {
 		// This returns a JSON or XML with the users
-		return pins_testRepository.findAll();
+		//return pins_testRepository.findAll();
+		/* 
+		List<Map<String, Object>> result = new ArrayList<>();
+		for(Pins_test pin : pins_testRepository.findAll()) {
+			Map<String, Object> pinData = new HashMap<>();
+			pinData.put("pin_id", pin.getPin_id());
+			pinData.put("latitude", pin.getLatitude());
+			pinData.put("longitude", pin.getLongitude());
+
+			System.out.println("Longitude: " + pin.getLatitude());
+   		    System.out.println("Latitude: " + pin.getLongitude());
+			result.add(pinData);
+
+		}
+		*/
+		ArrayList<double[]> list = new ArrayList<double[]>();
+		for(Pins_test pin : pins_testRepository.findAll()) {
+			double[] temp=new double[2];
+			temp[0]=pin.getLongitude();
+			temp[1]=pin.getLatitude();
+			list.add(temp);
+		}
+
+		return list;
 	}
 }
 
