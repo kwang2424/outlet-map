@@ -19,10 +19,24 @@ function Root() {
     const [adding, setAdding] = React.useState(false)
     const [popup, setPopup] = React.useState(null)
     const [markers, setMarkers] = React.useState([])
+    
     React.useEffect(() => {
-        setMarkers([[-74.013207, 40.719632], [-74.023107, 40.719635]])
-        console.log(markers)
+        const getMarkers = async () => {
+            const body = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+            const res = await fetch('/api/locations', body)
+            const data = await res.json()
+            // console.log(data)
+            setMarkers(data)
+        }
+        getMarkers()
+            .catch(err => console.log(err))
     }, [])
+
     const handleOnResult = (evt) => {
         const { result } = evt;
         const location =
