@@ -29,7 +29,7 @@ function Root() {
                     'Content-Type': 'application/json'
                 }
             }
-            const res = await fetch('/api/locations', body)
+            const res = await fetch('http://localhost:8080/api/show', body)
             const data = await res.json()
             // console.log(data)
             setMarkers(data)
@@ -65,7 +65,7 @@ function Root() {
             },
             body: JSON.stringify(popup)
         }
-        const res = await fetch('/api/locations', body)
+        const res = await fetch('http://localhost:8080/api/locations', body)
         console.log(body)
         console.log(res)
     }
