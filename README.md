@@ -1,5 +1,5 @@
 # Outlet Map powered by React and Spring Boot frameworks
-# Authors: Kevin Wang and Andrew Lee (frontend) + Chloe Han, Edison Chen, and Christopher Li (backend)
+Authors: Kevin Wang and Andrew Lee (frontend) + Chloe Han, Edison Chen, and Christopher Li (backend)
 
 The Problem:
 Have you ever been in need of a charge and walk into a cafe only to awkwardly walk around to see that there are no outlets? This is where our web solution comes in.
