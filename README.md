@@ -2,7 +2,7 @@
 
 Our web app displays outlets in NYC in an interactive interface. Users can drop pins on the map to indicate outlet locations which is automatically saved in a local MySQL database.
 
-[Presentation](https://drive.google.com/file/d/1-kG0LoLKk2ss7srXB0UOUbPYzE8v7KSu/view?usp=sharing).
+[Presentation](https://drive.google.com/file/d/1-kG0LoLKk2ss7srXB0UOUbPYzE8v7KSu/view?usp=sharing)
 
 ## Usage
 
